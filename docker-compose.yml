@@ -1,0 +1,42 @@
+name: satquery
+
+services:
+  db:
+    image: postgis/postgis:18-3.6
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-satquery}
+      POSTGRES_USER: ${POSTGRES_USER:-satquery}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in the root .env file}
+    ports:
+      - "127.0.0.1:${POSTGRES_PORT:-5432}:5432"
+    volumes:
+      - satquery_postgres_data:/var/lib/postgresql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 5s
+      retries: 12
+      start_period: 10s
+
+  db-test:
+    image: postgis/postgis:18-3.6
+    profiles: ["test"]
+    environment:
+      POSTGRES_DB: satquery_test
+      POSTGRES_USER: satquery_test
+      POSTGRES_PASSWORD: ${TEST_POSTGRES_PASSWORD:-satquery_test_only}
+    ports:
+      - "127.0.0.1:${TEST_POSTGRES_PORT:-55432}:5432"
+    tmpfs:
+      - /var/lib/postgresql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 2s
+      timeout: 3s
+      retries: 20
+      start_period: 5s
+
+volumes:
+  satquery_postgres_data:
+

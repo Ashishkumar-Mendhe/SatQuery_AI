@@ -1,0 +1,73 @@
+# Secrets and local configuration (keep safe examples tracked)
+.env
+.env.*
+**/.env
+**/.env.*
+!**/.env.example
+*.pem
+*.key
+*.p12
+secrets/
+
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+pytest-cache-files-*/
+.mypy_cache/
+.ruff_cache/
+.venv/
+venv/
+*.egg-info/
+htmlcov/
+.coverage*
+
+# JavaScript / Next.js
+node_modules/
+.next/
+out/
+dist/
+coverage/
+*.tsbuildinfo
+
+# Alembic and local tooling
+backend/.coverage
+
+# Editors and OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Local databases, logs, and runtime state
+*.db
+*.sqlite
+*.sqlite3
+*.log
+tmp/
+temp/
+
+# Large Earth-observation inputs, generated artifacts, and model weights
+data/raw/**
+data/uploads/**
+data/artifacts/**
+data/cache/**
+models/**
+*.tif
+*.tiff
+*.jp2
+*.hdf
+*.h5
+*.nc
+*.zarr/
+*.onnx
+*.pt
+*.pth
+*.ckpt
+
+# Allow directory conventions and deliberately small, synthetic fixtures
+!data/README.md
+!tests/fixtures/**
+!tests/fixtures/**/*.json
+!tests/fixtures/**/*.geojson
+!tests/fixtures/**/*.txt
